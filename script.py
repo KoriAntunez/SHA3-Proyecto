@@ -1,25 +1,25 @@
-import os   #provides functions for interacting with the opeprovides functions and variables which are used to manipulate different parts of the Python Runtime Environment.rating system
-import sys  #provides functions and variables which are used to manipulate different parts of the Python Runtime Environment.
-from tqdm import tqdm #used for creating Progress Meters or Progress Bars
-from termcolor import colored,cprint  # It is a  python module for ANSII Color formatting for output in the terminal
+import os  #proporciona funciones para interactuar con el opeproporciona funciones y variables que se utilizan para manipular diferentes partes del entorno de tiempo de ejecución de Python.sistema de calificación
+import sys #proporciona funciones y variables que se utilizan para manipular diferentes partes del entorno de tiempo de ejecución de Python.
+from tqdm import tqdm #utilizado para crear medidores de progreso o barras de progreso
+from termcolor import colored,cprint  # Es un módulo de python para formato de color ANSII para salida en la terminal
 
 class Encryption:
 
 	def __init__(self,filename):	# Constructor
 		self.filename = filename
 
-	def encryption(self): # Allows us to perfrom file operation
+	def encryption(self): # Nos permite realizar operaciones con archivos
 
-		try:			  # used to check some code for errors
+		try:			  # utilizado para verificar algún código en busca de errores
 			original_information = open(self.filename,'rb')
 
 		except (IOError, FileNotFoundError):
-			cprint('File with name {} is not found.'.format(self.filename), color='red',attrs=['bold','blink'])
+			cprint('El archivo con el nombre {} no se encontro.'.format(self.filename), color='red',attrs=['bold','blink'])
 			sys.exit(0)
 
 		try:
 
-			encrypted_file_name = 'cipher_' + self.filename
+			encrypted_file_name = 'encriptado_' + self.filename
 			encrypted_file_object = open(encrypted_file_name,'wb')
 
 			content = original_information.read()
@@ -27,15 +27,15 @@ class Encryption:
 
 
 			key = 192
-			cprint('Encryption Process is in progress...!',color='green',attrs=['bold'])
+			cprint('El proceso de cifrado está en curso...!',color='green',attrs=['bold'])
 			for i,val in tqdm(enumerate(content)):
 				content[i] = val ^ key
 
 			encrypted_file_object.write(content)
 
 
-		except Exception:		# used to catch and handle exceptions
-			cprint('Something went wrong with {}'.format(self.filename),color='red',attrs=['bold','blink'])
+		except Exception:		# usado para capturar y manejar excepciones
+			cprint('Algo salió mal con {}'.format(self.filename),color='red',attrs=['bold','blink'])
 		finally:
 			encrypted_file_object.close()
 			original_information.close()
@@ -99,14 +99,14 @@ while True:
  |___|_||_\__|_|  \_, | .__/\__|_\___/_||_|
                   |__/|_|                  '''
 			cprint(logo,color='red',attrs=['bold'])
-			cprint('Enter the filename for Encryption with proper extension:',end=' ',color='yellow',attrs=['bold'])
+			cprint('Ingrese el nombre de archivo para el cifrado con la extensión adecuada:',end=' ',color='yellow',attrs=['bold'])
 			file = input()
 			E1 = Encryption(file)
 			E1.encryption()
-			cprint('{} Encryption is done Sucessfully...!'.format(file), color='green',attrs=['bold'])
-			cprint('Do you want to do it again (y/n):',end = ' ', color='red',attrs=['bold','blink'])
+			cprint('{} El cifrado se realiza con éxito...!'.format(file), color='green',attrs=['bold'])
+			cprint('¿Quieres hacerlo de nuevo? (s/n):',end = ' ', color='red',attrs=['bold','blink'])
 			again_choice  = input()
-			if (again_choice.lower() == 'y'):
+			if (again_choice.lower() == 's'):
 				continue
 			else:
 				break
@@ -118,18 +118,18 @@ while True:
  |___/\___\__|_|  \_, | .__/\__|_\___/_||_|
                   |__/|_|                  '''
 			cprint(logo,color='red',attrs=['bold'])
-			cprint('Enter the Encrypted filename with proper extension:',end=' ',color='yellow',attrs=['bold'])
+			cprint('Ingrese el nombre del archivo cifrado con la extensión adecuada:',end=' ',color='yellow',attrs=['bold'])
 			file = input()
 			D1 = Decryption(file)
 			D1.decryption()
-			cprint('{} Decryption is done Sucessfully...!'.format(file),color='green',attrs=['bold'])
-			cprint('Do you want to do it again (y/n):',end = ' ', color='red',attrs=['bold','blink'])
+			cprint('{} El descifrado se realiza con éxito...!'.format(file),color='green',attrs=['bold'])
+			cprint('¿Quieres hacerlo de nuevo? (s/n):',end = ' ', color='red',attrs=['bold','blink'])
 			again_choice  = input()
-			if (again_choice.lower() == 'y'):
+			if (again_choice.lower() == 's'):
 				continue
 			else:
 				break
 		elif choice == 3:
 			sys.exit(0)
 		else:
-			print('Your choice of selection is not available. Sorry to see you again.')
+			print('Su opción de selección no está disponible..')
