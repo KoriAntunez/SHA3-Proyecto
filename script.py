@@ -82,12 +82,12 @@ class Decryption:
 			decrypted_file_object.close()
 
 space_count = 30 * ' '
-cprint('{} File Encryption And Decryption Tool. {}'.format(space_count,space_count), 'red')
-cprint('{} {}'.format(space_count + 3 * ' ','program done by MAP.'),'green')
+cprint('{} Herramienta de cifrado y descifrado de archivos. {}'.format(space_count,space_count), 'red')
+cprint('{} {}'.format(space_count + 3*'' ,'Prueba de SHA3 - Proyecto de Tend. en Ing. de SW '),'green')
 while True:
-		cprint('1. Encryption',color='magenta')
-		cprint('2. Decryption',color='magenta')
-		cprint('3. Exit', color='red')
+		cprint('1. Encriptar',color='magenta')
+		cprint('2. Desencriptar',color='magenta')
+		cprint('3. Salir', color='red')
 		# cprint('Enter your choice:',color='cyan',attrs=["bold"])
 		cprint('~Python3:',end=' ', color='green')
 		choice = int(input())
@@ -132,4 +132,4 @@ while True:
 		elif choice == 3:
 			sys.exit(0)
 		else:
-			print('Su opción de selección no está disponible..')
+			print('Su opción de selección no está disponible.Seleccione nuevamente.')
