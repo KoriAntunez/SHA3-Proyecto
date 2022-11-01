@@ -52,7 +52,7 @@ def keccak(S):
     w = 64
     l = 6
 
-    # 1. State Array Construction
+    # 1. Construyendo el array de estados
     def state_initialize():
         a = {}
 
@@ -63,8 +63,10 @@ def keccak(S):
         
         return a
 
-    # 2. Keccak-p Permutations
-    # θ (Algorithm 1)
+    # 2. Permutaciones Keccak-p
+    
+    # (Algorithm 1)
+    # θ : XOR cada bit de la matriz de estados con 2 columnas.
     def θ(a):
         c = {}
 
@@ -87,7 +89,8 @@ def keccak(S):
 
         return a_
 
-    # p (Algorithm 2)
+    # (Algorithm 2)
+    # ρ : Gire los bits en cada carril mediante un desplazamiento especificado.
     def p(a):
         a_ = {}
         (x, y) = (1, 0)
@@ -102,7 +105,8 @@ def keccak(S):
 
         return a_
 
-    # π  (Algorithm 3)
+    # (Algorithm 3)
+    # π : Shuffle lanes.
     def π(a):
         a_ = {}
 
@@ -113,7 +117,8 @@ def keccak(S):
 
         return a_
 
-    # χ  (Algorithm 4)
+    # (Algorithm 4)
+    # χ : XOR cada bit de la matriz de estados con una función no lineal de bits de la misma fila.
     def χ(a):
         a_ = {}
 
@@ -142,6 +147,7 @@ def keccak(S):
         return r[0]
 
     # ι  (Algorithm 6)
+    # ι : Sólo modifique ciertos bits de un carril en función de un índice redondo.
     def i(A, r):
         a_ = A
         rc_ = [0 for x in range(0, w)]
@@ -158,7 +164,7 @@ def keccak(S):
     def Rnd(A, r):
         return i(χ(π(p(θ(A)))), r)
 
-    # 3. State Array Decomposition
+    # 3. Descomposición de matriz de estado
     a = state_initialize()
 
     for r in range(0, 24):
@@ -177,28 +183,28 @@ def keccak(S):
 # pad10*1 
 # ----------------------------------------------------------------------------------------------------- 
 def pad(x, m):
-    '''Pad data with 0's until it is a multiple of x'''
+    '''Rellene los datos con 0 hasta que sea un múltiplo de x'''
     j = (-m-2) % x
 
     return '1' + '0'*j + '1'
 
 
-# sponge construction
+# Construcción de la esponja
 # ----------------------------------------------------------------------------------------------------- 
 def sponge(message, bit_length, rate):
     '''
-    Helper function to perform absorbtion and squeezing steps of KECCAK.
+    Función auxiliar para realizar los pasos de absorción y compresión de KECCAK.
 
-    Parameters:
-        message (str): message to be hashed.
-        bit_length (int): length of digest.
-        rate (int): hash rate of specified algorithm.
+     Parámetros:
+         mensaje (str): mensaje a codificar.
+         bit_length (int): longitud del resumen.
+         tasa (int): tasa de hash del algoritmo especificado.
 
-    Returns:
-        str: Digest of message based on bit_length and rate.
+     Devoluciones:
+         str: Resumen del mensaje basado en bit_length y rate.
     '''
 
-    # 1. Set Constants
+    # 1. Establecer constantes
     p = message + pad(rate , len(message))
     n = len(p)//rate
     c = 1600 - rate
@@ -206,7 +212,7 @@ def sponge(message, bit_length, rate):
     p_ = {}
     z = ''
 
-    # 2. Absorb
+    # 2. Absorción
     for i in range(0, n):
         p_[i] =  p[i*rate:(i*rate)+rate]
         s = keccak(format(int(s, 2) ^ int(p_[i] + '0'*c, 2), '01600b'))
@@ -222,6 +228,7 @@ def sponge(message, bit_length, rate):
 
 
 def main():
+    cprint('-------------------------------------TENDENCIAS EN INGENIERÍA DE SOFTWARE--------------------------------------------\n',end=' ',color='red',attrs=['bold'])
     cprint('Ingrese el nombre del texto para el cifrado:',end=' ',color='yellow',attrs=['bold'])
     text = input()
     cprint('¡El proceso de cifrado está en progreso...!',color='green',attrs=['bold'])
